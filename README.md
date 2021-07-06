@@ -12,3 +12,6 @@ modules used:
   2. xlsxwriter
   3. sqlite
   4. date time
+
+
+I turned the project into an executable so I can send it to others who requires it.
