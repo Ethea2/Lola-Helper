@@ -10,7 +10,7 @@ There's also an option to export the data to an excel. It will generate an excel
 modules used:
   1. Tkinter
   2. xlsxwriter
-  3. sqlite
+  3. sqlite3
   4. date time
 
 
