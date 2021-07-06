@@ -90,9 +90,6 @@ def export_excel():
 	workbook.close()
 
 
-
-
-
 connect()
 #insert_product("Lucky Me", 30)
 #delete_product()
