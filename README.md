@@ -2,7 +2,7 @@
 A program that calculates the profits and saves all the daily transactions of a Sari-sari Store.
 
 
-I made this program to help my Grandmother compute her daily expenses and keep tabs automatically.
+I made this program to help my Grandmother compute her daily expenses and keep tabs on daily transactions.
 
 The program uses a lightweight database named sqlite3.
 There's also an option to export the data to an excel. It will generate an excel file if there's no excel files available.
