@@ -13,6 +13,7 @@ class Window(object):
 	def __init__(self,window):
 		self.window = window
 		self.selected_row = []
+		self.window.wm_title("Lola Helper by Nathan")
 		#Takes the date of transaction.
 		today = date.today()
 		display_date = today.strftime("%B %d, %Y")
