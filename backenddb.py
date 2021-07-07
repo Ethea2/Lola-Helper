@@ -1,4 +1,5 @@
 import sqlite3
+import os
 from xlsxwriter.workbook import Workbook
 from datetime import date
 
@@ -8,19 +9,21 @@ display_date = today.strftime("%B %d, %Y")
 def connect():
 	connection = sqlite3.connect("store.db")
 	cursor = connection.cursor()
-	cursor.execute("CREATE TABLE IF NOT EXISTS store (id INTEGER PRIMARY KEY, product TEXT, price INTEGER, date TEXT)")
+	cursor.execute("CREATE TABLE IF NOT EXISTS store (id INTEGER PRIMARY KEY, product TEXT, price INTEGER, date TEXT, quantity INTEGER)")
 	connection.commit()
 	connection.close()
 
 
-def add_product(product, price):
+#Adds transaction records to the data base.
+def add_product(product, price, quantity):
 	connection = sqlite3.connect("store.db")
 	cursor = connection.cursor()
-	cursor.execute("INSERT INTO store VALUES (NULL,?,?,?)", (product, price, display_date))
+	cursor.execute("INSERT INTO store VALUES (NULL,?,?,?,?)", (product, price, display_date, quantity))
 	connection.commit()
 	connection.close()
 
 
+#Returns all the existing data into a list of tuples.
 def	view_all():
 	connection = sqlite3.connect("store.db")
 	cursor = connection.cursor()
@@ -30,6 +33,7 @@ def	view_all():
 	return rows
 
 
+#Only gets the price of all the products. Returns a list of the price data.
 def get_price():
 	connection = sqlite3.connect("store.db")
 	cursor = connection.cursor()
@@ -40,6 +44,7 @@ def get_price():
 	return price
 
 
+#Calculates the sum of all the price data. Returns the sum/profit integer.
 def get_profit():
 	sold_items = get_price()
 	profit = 0
@@ -48,6 +53,7 @@ def get_profit():
 	return profit
 
 
+#Deletes a product from the database through its ID.
 def delete_product(id):
 	connection = sqlite3.connect("store.db")
 	cursor = connection.cursor()
@@ -56,23 +62,26 @@ def delete_product(id):
 	connection.close()
 
 
-def search(product="",price=""):
+#Searches the database for either the product or price. Returns the a list of tuples of data.
+def search(product="",price="", quantity=""):
 	connection = sqlite3.connect("store.db")
 	cursor = connection.cursor()
-	cursor.execute("SELECT * FROM store WHERE product=? OR price=?", (product,price))
+	cursor.execute("SELECT * FROM store WHERE product=? OR price=? OR quantity=?", (product,price,quantity))
 	rows = cursor.fetchall()
 	connection.close()
 	return rows
 
 
-def update_product(id, product, price):
+#Updates or changes an existing product through its ID.
+def update_product(id, product, price, quantity):
 	connection = sqlite3.connect("store.db")
 	cursor = connection.cursor()
-	cursor.execute("UPDATE store SET product=?, price=? WHERE id=?", (product, price, id))
+	cursor.execute("UPDATE store SET product=?, price=?, quantity=? WHERE id=?", (product, price, quantity, id))
 	connection.commit()
 	connection.close()
 
 
+#Deletes all existing data in the database
 def delete_all():
 	connection = sqlite3.connect("store.db")
 	cursor = connection.cursor()
@@ -80,8 +89,11 @@ def delete_all():
 	connection.commit()
 	connection.close()
 
+
+#Exports everything to an excel file. It generates a new file if the file doesn't exists.
 def export_excel():
-	workbook = Workbook(f'store {display_date}.xlsx')
+	homepath = os.path.join(os.environ["HOMEPATH"], "Desktop")
+	workbook = Workbook(f'{homepath}\\store {display_date}.xlsx')
 	worksheet = workbook.add_worksheet()
 	data = view_all()
 	for i, row in enumerate(data):
@@ -91,9 +103,3 @@ def export_excel():
 
 
 connect()
-#insert_product("Lucky Me", 30)
-#delete_product()
-#update_product(1, 'Lays', 40)
-#print(search(price=20))
-#export_excel()
-#print(get_profit())
