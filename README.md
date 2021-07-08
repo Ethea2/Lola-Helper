@@ -1,4 +1,4 @@
-# Sari-Sari-Store-Owner-s-Bestfriend
+# Lola Helper!
 A program that calculates the profits and saves all the daily transactions of a Sari-sari Store.
 
 
@@ -15,3 +15,6 @@ modules used:
 
 
 I turned the project into an executable so I can send it to others who requires it.
+
+You can download the file from here:
+https://drive.google.com/file/d/1cv_T6SsYOxmuEKMKRXus4eFU0o4jOGS_/view?usp=sharing
