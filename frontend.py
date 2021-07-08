@@ -4,7 +4,7 @@ from datetime import date
 from backenddb import Database
 
 #Creates a database object
-database = Database()
+database = Database("store.db")
 
 
 class Window(object):

@@ -6,10 +6,11 @@ from datetime import date
 class Database:
 
 
-	def __init__(self):
+	def __init__(self, database):
+		self.database = database
 		self.today = date.today()
 		self.display_date = self.today.strftime("%B %d, %Y")
-		self.connection = sqlite3.connect("store.db")
+		self.connection = sqlite3.connect(self.database)
 		self.cursor = self.connection.cursor()
 		self.cursor.execute("CREATE TABLE IF NOT EXISTS store (id INTEGER PRIMARY KEY, product TEXT, price INTEGER, date TEXT, quantity INTEGER)")
 		self.connection.commit()
@@ -73,6 +74,8 @@ class Database:
 		for i, row in enumerate(data):
 			for j, value in enumerate(row):
 				worksheet.write(i, j, value)
+		profit = self.get_profit()
+		worksheet.write(0, 5, f"The profit is: {profit} pesos")
 		workbook.close()
 
 
